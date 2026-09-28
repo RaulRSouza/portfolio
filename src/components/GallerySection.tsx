@@ -1,5 +1,5 @@
 import { motion, useInView, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Github, Terminal } from "lucide-react";
 import projectHpm from "@/assets/project-hpm.jpg";
 import projectCrypto from "@/assets/project-crypto.jpg";
@@ -22,28 +22,6 @@ type Project = {
 const projects: Project[] = [
   {
     id: "01",
-    title: "Climbe",
-    subtitle: "Residência de Software III — Climbe Investimentos",
-    category: "FULL STACK",
-    year: "2026",
-    description: "Sistema interno para os analistas de investimentos da empresa: arquitetura, modelagem de dados, APIs REST com as regras de negócio e interface pensada para o dia a dia dos analistas.",
-    tech: ["React", "TypeScript", "APIs REST", "SQL"],
-    metrics: {},
-    repo: "https://github.com/RaulRSouza/climb-insight-hub",
-  },
-  {
-    id: "02",
-    title: "To-Do Full Stack",
-    subtitle: "Teste técnico — Advice Health",
-    category: "FULL STACK",
-    year: "2025",
-    description: "Aplicação de tarefas com Django REST Framework e React + TypeScript: autenticação JWT, CRUD, filtros, categorias, compartilhamento, Docker, PostgreSQL e testes com pytest. Nota 30/30.",
-    tech: ["Django REST", "React", "TypeScript", "PostgreSQL", "Docker"],
-    metrics: { nota: "30/30", testes: "pytest" },
-    repo: "https://github.com/RaulRSouza/TO-DO",
-  },
-  {
-    id: "03",
     title: "CryptoTrend",
     subtitle: "Plataforma de Trading",
     category: "FULL STACK",
@@ -54,7 +32,7 @@ const projects: Project[] = [
     image: projectCrypto,
   },
   {
-    id: "04",
+    id: "02",
     title: "HPM-SINC",
     subtitle: "Sistema Hospitalar — PM Sergipe",
     category: "FULL STACK",
@@ -66,7 +44,7 @@ const projects: Project[] = [
     repo: "https://github.com/RaulRSouza/API-JM",
   },
   {
-    id: "05",
+    id: "03",
     title: "API LACEN",
     subtitle: "Residência de Software II — Fundação Parreiras Horta",
     category: "BACKEND",
@@ -78,7 +56,7 @@ const projects: Project[] = [
     repo: "https://github.com/RaulRSouza/FSPH-API",
   },
   {
-    id: "06",
+    id: "04",
     title: "Eletrocel",
     subtitle: "Loja Virtual",
     category: "FULL STACK",
@@ -92,7 +70,177 @@ const projects: Project[] = [
 
 const metricLabels: Record<string, string> = {
   perf: "LIGHTHOUSE", sinais: "SINAIS", laudos: "LAUDOS", users: "USUÁRIOS",
-  endpoints: "ENDPOINTS", models: "MODELOS", produtos: "PRODUTOS", nota: "NOTA", testes: "TESTES",
+  endpoints: "ENDPOINTS", models: "MODELOS", produtos: "PRODUTOS",
+};
+
+type VideoProject = {
+  title: string;
+  subtitle: string;
+  category: string;
+  year: string;
+  highlight: string;
+  description: string;
+  points: string[];
+  tech: string[];
+  video: string;
+  poster: string;
+  url: string;
+  repo?: string;
+};
+
+const videoBase = `${import.meta.env.BASE_URL}videos/`;
+
+const videoProjects: VideoProject[] = [
+  {
+    title: "Intranet Decós",
+    subtitle: "Estágio de TI — Hospital Decós",
+    category: "FRONT-END",
+    year: "2026",
+    highlight: "Front-end feito sozinho",
+    description: "Intranet corporativa do Hospital Decós: desenvolvi sozinho todo o front-end, do design no Figma à implementação.",
+    points: [
+      "31 telas em uma SPA com roteamento por hash",
+      "4 níveis de acesso: Leitura, Colaborador, RH e Admin",
+      "Tema claro/escuro, mural de avisos, eventos, documentos e POPs",
+    ],
+    tech: ["HTML5", "Tailwind CSS", "JavaScript", "Figma"],
+    video: `${videoBase}decos.mp4`,
+    poster: `${videoBase}decos-poster.jpg`,
+    url: "hospital-decos / intranet",
+    repo: "https://github.com/RaulRSouza/intranet-decos",
+  },
+  {
+    title: "Climbe",
+    subtitle: "Residência de Software III — Climbe Investimentos",
+    category: "FULL STACK",
+    year: "2026",
+    highlight: "Back-end e front-end",
+    description: "Sistema interno para os analistas de investimentos da Climbe: arquitetura, modelagem de dados, APIs REST com as regras de negócio e a interface usada no dia a dia.",
+    points: [
+      "Pipeline de contratos, propostas e documentos",
+      "Agenda, permissões e gestão de empresas",
+      "Back-end com APIs REST e regras de negócio",
+    ],
+    tech: ["React", "TypeScript", "APIs REST", "SQL"],
+    video: `${videoBase}climbe.mp4`,
+    poster: `${videoBase}climbe-poster.jpg`,
+    url: "climbe / sistema interno",
+    repo: "https://github.com/RaulRSouza/climb-insight-hub",
+  },
+];
+
+const ProjectVideo = ({ project }: { project: VideoProject }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const visible = useInView(videoRef, { margin: "-20% 0px -20% 0px" });
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (visible) video.play().catch(() => {});
+    else video.pause();
+  }, [visible]);
+
+  return (
+    <div className="relative group">
+      <div className="absolute -inset-3 md:-inset-5 bg-primary/10 blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-700 pointer-events-none" />
+      <div className="relative border border-border bg-card overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]">
+        {/* Barra de janela */}
+        <div className="flex items-center gap-2 px-3 md:px-4 py-2.5 border-b border-border bg-background/80">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+          <span className="ml-3 flex-1 min-w-0 truncate text-mono text-[10px] tracking-wider text-muted-foreground">
+            {project.url}
+          </span>
+          <span className="flex items-center gap-1.5 text-mono text-[9px] tracking-widest uppercase text-primary">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            demo
+          </span>
+        </div>
+        <video
+          ref={videoRef}
+          className="block w-full aspect-video object-cover object-top bg-black"
+          src={project.video}
+          poster={project.poster}
+          muted
+          loop
+          playsInline
+          controls
+          preload="metadata"
+          aria-label={`Vídeo de demonstração do projeto ${project.title}`}
+        />
+      </div>
+    </div>
+  );
+};
+
+const VideoShowcase = ({ project, index }: { project: VideoProject; index: number }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const reversed = index % 2 === 1;
+
+  return (
+    <motion.article
+      ref={ref}
+      className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-12 md:py-20 border-b border-border"
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className={`lg:col-span-8 ${reversed ? "lg:order-2" : ""}`}>
+        <ProjectVideo project={project} />
+      </div>
+
+      <div className={`lg:col-span-4 ${reversed ? "lg:order-1" : ""}`}>
+        <span className="text-mono text-[9px] tracking-[0.3em] uppercase text-primary block mb-2">
+          {String(index + 1).padStart(2, "0")} · {project.category} — {project.year}
+        </span>
+        <h3 className="text-display text-3xl md:text-4xl font-bold text-foreground leading-none">
+          {project.title}
+        </h3>
+        <span className="text-body text-xs text-muted-foreground mt-2 block">
+          {project.subtitle}
+        </span>
+
+        <span className="inline-flex items-center gap-2 mt-5 px-3 py-1.5 border border-primary/40 bg-primary/10 text-mono text-[10px] tracking-widest uppercase text-primary">
+          ★ {project.highlight}
+        </span>
+
+        <p className="text-body text-sm text-muted-foreground leading-relaxed mt-5">
+          {project.description}
+        </p>
+
+        <ul className="mt-5 space-y-2">
+          {project.points.map((point) => (
+            <li key={point} className="text-body text-sm text-secondary-foreground flex gap-3">
+              <span className="mt-2 w-1 h-1 flex-none bg-primary" aria-hidden />
+              {point}
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex flex-wrap gap-1.5 mt-6">
+          {project.tech.map((t) => (
+            <span key={t} className="text-mono text-[9px] tracking-wider uppercase px-2 py-1 border border-border text-muted-foreground">
+              {t}
+            </span>
+          ))}
+        </div>
+
+        {project.repo && (
+          <a
+            href={project.repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-6 text-mono text-[10px] tracking-[0.2em] uppercase border border-border px-4 py-2 text-muted-foreground hover:border-primary hover:text-primary transition-colors duration-300"
+          >
+            <Github className="w-3.5 h-3.5" />
+            Ver código
+          </a>
+        )}
+      </div>
+    </motion.article>
+  );
 };
 
 const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
@@ -298,6 +446,18 @@ const GallerySection = () => {
           </span>
         </motion.div>
       </motion.div>
+
+      <div className="border-t border-border mb-16 md:mb-24">
+        {videoProjects.map((project, i) => (
+          <VideoShowcase key={project.title} project={project} index={i} />
+        ))}
+      </div>
+
+      <div className="flex items-center gap-3 mb-6">
+        <span className="text-mono text-[10px] tracking-[0.4em] uppercase text-primary">
+          // outros projetos
+        </span>
+      </div>
 
       <div className="border-t border-border">
         {projects.map((project, i) => (

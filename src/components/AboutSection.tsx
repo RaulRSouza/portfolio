@@ -9,17 +9,6 @@ const skills = [
   { name: "DevOps & Tools", items: ["Docker", "Git / GitHub", "Linux", "Google Cloud (fundamentos)", "Power BI / Excel"] },
 ];
 
-const timeline = [
-  { period: "Ago 2026 — Atual", role: "Bolsista de Iniciação", company: "Sebrae — Programa Supernova", desc: "Programa de iniciação ao empreendedorismo e à inovação, atuando no aperfeiçoamento de um simulador de cirurgia minimamente invasiva (Saúde Humana). Validação de soluções e visão de negócio aplicada à tecnologia." },
-  { period: "Abr 2026 — Ago 2026", role: "Professor de Informática Básica", company: "FUNDAT Aracaju", desc: "Aulas de hardware, sistemas operacionais, internet, segurança digital e Pacote Office. Planejamento das aulas e acompanhamento do aprendizado dos alunos." },
-  { period: "Jan 2026 — Jul 2026", role: "Desenvolvedor Full Stack", company: "Climbe Investimentos — Residência de Software III", desc: "Arquitetura e desenvolvimento full stack de um sistema interno para analistas de investimentos: modelagem de dados, APIs REST, regras de negócio e interface do front-end." },
-  { period: "Ago 2025 — Fev 2026", role: "Estagiário de TI — Backend", company: "Ricardo Dinucci", desc: "APIs RESTful com Python e FastAPI, modelagem e consultas SQL em PostgreSQL, Redis para performance, autenticação JWT e 2FA, integração com React e documentação das APIs." },
-  { period: "Fev 2025 — Ago 2025", role: "Estagiário de TI — Suporte", company: "Polícia Militar do Estado de Sergipe", desc: "Suporte técnico aos usuários, manutenção de computadores, instalação de softwares, apoio em redes e sistemas e organização de chamados." },
-  { period: "Jan 2025 — Jul 2025", role: "Desenvolvedor Backend", company: "LACEN / FSPH — Residência de Software II", desc: "API REST para o Laboratório Central de Saúde Pública: gestão de amostras biológicas, geração de laudos, autenticação JWT e documentação Swagger (OpenAPI)." },
-  { period: "Jun 2024 — Dez 2024", role: "Front-end e UI", company: "BAASIC — Residência de Software I", desc: "Design responsivo com Material UI, do Figma à implementação, com foco em acessibilidade e mobile. Docker para simplificar deploy e integração contínua." },
-  { period: "Mai 2023 — Jan 2024", role: "Jovem Aprendiz", company: "Eletrocel", desc: "Organização do sistema de informática da loja, cadastro de clientes e estoque, planilhas no Excel e suporte de vendas." },
-];
-
 const certifications = [
   { name: "Google Cloud Computing Foundations", org: "Google", year: "2025" },
   { name: "Empreendedorismo — Programa Supernova", org: "Sebrae · 80h", year: "2026" },
@@ -128,10 +117,10 @@ const AboutSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           {[
-            { value: "8", label: "Experiências" },
+            { value: "9", label: "Experiências" },
             { value: "3", label: "Residências" },
             { value: "20+", label: "Certificações" },
-            { value: "5º", label: "Período CC" },
+            { value: "6º", label: "Período CC" },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -208,54 +197,8 @@ const AboutSection = () => {
           </motion.div>
         </div>
 
-        {/* Timeline */}
-        <div>
-          <motion.div
-            className="flex items-center gap-3 mb-10"
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.7 }}
-          >
-            <span className="text-mono text-[10px] tracking-[0.4em] uppercase text-primary">
-              // trajetória
-            </span>
-          </motion.div>
-
-          <div className="border-t border-border">
-            {timeline.map((item, i) => (
-              <motion.div
-                key={item.period}
-                className="grid grid-cols-12 gap-x-4 gap-y-1 py-6 md:py-8 border-b border-border group hover:bg-card/50 transition-colors duration-500 px-4"
-                initial={{ opacity: 0, x: -20 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.8 + i * 0.15 }}
-                whileHover={{ x: 4 }}
-              >
-                <div className="col-span-12 md:col-span-2">
-                  <span className="text-mono text-[10px] tracking-widest uppercase text-primary">
-                    {item.period}
-                  </span>
-                </div>
-                <div className="col-span-12 md:col-span-4">
-                  <h4 className="text-display text-lg font-bold text-foreground">
-                    {item.role}
-                  </h4>
-                  <span className="text-mono text-[10px] tracking-widest uppercase text-muted-foreground">
-                    {item.company}
-                  </span>
-                </div>
-                <div className="col-span-12 md:col-span-6 mt-2 md:mt-0">
-                  <p className="text-body text-sm text-muted-foreground leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
         {/* Formação */}
-        <div className="mt-20">
+        <div>
           <motion.div
             className="flex items-center gap-3 mb-10"
             initial={{ opacity: 0 }}
@@ -279,7 +222,7 @@ const AboutSection = () => {
                   Bacharelado em Ciência da Computação
                 </h4>
                 <span className="text-mono text-[10px] tracking-widest uppercase text-muted-foreground">
-                  Universidade Tiradentes (UNIT) — 5º período, em curso
+                  Universidade Tiradentes (UNIT) — 6º período, em curso
                 </span>
               </div>
               <span className="text-mono text-[10px] tracking-widest text-primary">

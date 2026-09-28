@@ -217,7 +217,7 @@ const HeroSection = () => {
           >
             <div className="md:col-span-5 md:col-start-7">
               <p className="text-body text-muted-foreground text-sm md:text-base leading-relaxed mb-6">
-                Desenvolvedor full stack em formação — Ciência da Computação (UNIT, 5º período).
+                Desenvolvedor full stack em formação — Ciência da Computação (UNIT, 6º período).
                 APIs REST com Python, FastAPI e Java/Spring Boot, interfaces responsivas em React,
                 com experiência prática em estágios e residências de software.
               </p>
