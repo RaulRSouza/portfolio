@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 
 const MatrixRain = () => {
   const chars = "01アイウエオカキクケコサシスセソタチツテト";
-  const columns = 30;
+  const columns = typeof window !== "undefined" && window.innerWidth < 768 ? 14 : 30;
   
   return (
     <div className="absolute inset-0 overflow-hidden opacity-[0.04]">
@@ -141,7 +141,7 @@ const HeroSection = () => {
 
       {/* Corner markers */}
       <motion.div
-        className="absolute top-8 left-6 md:left-12"
+        className="absolute top-20 md:top-24 left-6 md:left-12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
@@ -152,19 +152,19 @@ const HeroSection = () => {
       </motion.div>
 
       <motion.div
-        className="absolute top-8 right-6 md:right-12"
+        className="absolute top-20 md:top-24 right-6 md:right-12 hidden sm:block"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 1 }}
       >
         <span className="text-mono text-[10px] text-muted-foreground tracking-widest">
-          v1.0.0
+          v2.0.0
         </span>
       </motion.div>
 
       {/* Main content */}
       <motion.div
-        className="relative z-10 w-full px-6 md:px-12 lg:px-16 pt-24"
+        className="relative z-10 w-full px-6 md:px-12 lg:px-16 pt-32 pb-28 md:pt-28 md:pb-36"
         style={{ opacity, scale, y }}
       >
         <motion.div
@@ -184,7 +184,7 @@ const HeroSection = () => {
               animate={{ width: 48 }}
               transition={{ delay: 1.5, duration: 0.8 }}
             />
-            <span className="text-mono text-[11px] tracking-[0.4em] uppercase text-primary">
+            <span className="text-mono text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.4em] uppercase text-primary">
               <TypewriterText text="// desenvolvedor_full_stack" delay={1800} />
             </span>
           </motion.div>
@@ -192,17 +192,18 @@ const HeroSection = () => {
           {/* Main title */}
           <div className="overflow-visible mb-1">
             <motion.h1
-              className="text-display text-[clamp(2.4rem,8vw,7rem)] font-extrabold leading-[0.92] tracking-[-0.04em] whitespace-nowrap"
+              className="text-display text-[clamp(1.5rem,8vw,7rem)] sm:text-[clamp(1.5rem,6vw,4.75rem)] font-extrabold leading-[0.92] tracking-[-0.04em] sm:whitespace-nowrap"
               variants={lineVariants}
             >
               <GlitchText text="RAUL" className="mr-[0.18em]" />
+              <br className="sm:hidden" />
               <span className="text-gradient-cyber">RODRIGUES</span>
             </motion.h1>
           </div>
 
           <div className="overflow-hidden mb-12">
             <motion.h1
-              className="text-display text-[clamp(2rem,6vw,5rem)] font-extrabold leading-[0.85] tracking-[-0.04em] text-foreground"
+              className="text-display text-[clamp(1.75rem,6vw,5rem)] font-extrabold leading-[0.85] tracking-[-0.04em] text-foreground"
               variants={lineVariants}
             >
               DEV FULL STACK<span className="text-primary">_</span>
@@ -216,11 +217,12 @@ const HeroSection = () => {
           >
             <div className="md:col-span-5 md:col-start-7">
               <p className="text-body text-muted-foreground text-sm md:text-base leading-relaxed mb-6">
-                Desenvolvedor Full Stack com 3 anos de experiência, cursando Ciência da Computação.
-                Focado em construir sistemas escaláveis e interfaces que transformam ideias em realidade.
+                Desenvolvedor full stack em formação — Ciência da Computação (UNIT, 5º período).
+                APIs REST com Python, FastAPI e Java/Spring Boot, interfaces responsivas em React,
+                com experiência prática em estágios e residências de software.
               </p>
               <div className="flex flex-wrap gap-2">
-                {["React", "TypeScript", "Python", "Java", "Spring Boot", "PostgreSQL"].map((tech, i) => (
+                {["React", "JavaScript", "Python", "FastAPI", "Java", "Spring Boot", "PostgreSQL", "Docker"].map((tech, i) => (
                   <motion.span
                     key={tech}
                     className="text-mono text-[10px] tracking-widest uppercase px-3 py-1.5 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-all duration-500"
@@ -240,7 +242,7 @@ const HeroSection = () => {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 3.5, duration: 1 }}

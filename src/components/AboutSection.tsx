@@ -3,18 +3,30 @@ import { useRef } from "react";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const skills = [
-  { name: "Frontend", items: ["React", "TypeScript / JavaScript", "Tailwind / Material UI", "Framer Motion", "Figma"] },
-  { name: "Backend", items: ["Python / FastAPI", "Java / Spring Boot", "API RESTful", "JWT / 2FA", "Swagger"] },
-  { name: "Banco de Dados", items: ["PostgreSQL", "Redis", "SQL", "MongoDB", "Prisma"] },
-  { name: "Infra & Tools", items: ["Docker", "Git / GitHub", "Power BI", "Excel", "CI/CD"] },
+  { name: "Front-end", items: ["React", "JavaScript / TypeScript", "HTML / CSS", "Material UI / Tailwind", "Figma"] },
+  { name: "Back-end", items: ["Python / FastAPI", "Java / Spring Boot", "APIs REST", "JWT / 2FA", "Swagger / OpenAPI"] },
+  { name: "Banco de Dados", items: ["SQL", "PostgreSQL", "Redis (cache)", "Modelagem de dados"] },
+  { name: "DevOps & Tools", items: ["Docker", "Git / GitHub", "Linux", "Google Cloud (fundamentos)", "Power BI / Excel"] },
 ];
 
 const timeline = [
-  { year: "2026", role: "Estagiário de TI", company: "Ricardo Dinucci", desc: "Desenvolvimento backend com FastAPI, APIs RESTful, integração com React, autenticação JWT/2FA, PostgreSQL, Redis e documentação técnica." },
-  { year: "2025", role: "Estagiário de TI", company: "Fundação de Saúde Parreiras Horta", desc: "Desenvolvimento de API REST para o LACEN, com gestão de amostras biológicas, geração de laudos, autenticação JWT, documentação Swagger e foco em arquitetura e segurança." },
-  { year: "2025", role: "Estagiário de TI", company: "Polícia Militar de Sergipe", desc: "Suporte técnico, manutenção de equipamentos, instalação de softwares, apoio a redes e sistemas e organização de chamados." },
-  { year: "2024", role: "Estagiário de TI", company: "BAASIC", desc: "Criação de interfaces responsivas com Material UI, do design no Figma à implementação, com foco em acessibilidade, mobile e uso de Docker para deploy e integração contínua." },
-  { year: "2022", role: "Jovem Aprendiz", company: "Eletrocel", desc: "Organização de sistemas, cadastro de clientes, controle de estoque, planilhas e suporte administrativo." },
+  { period: "Ago 2026 — Atual", role: "Bolsista de Iniciação", company: "Sebrae — Programa Supernova", desc: "Programa de iniciação ao empreendedorismo e à inovação, atuando no aperfeiçoamento de um simulador de cirurgia minimamente invasiva (Saúde Humana). Validação de soluções e visão de negócio aplicada à tecnologia." },
+  { period: "Abr 2026 — Ago 2026", role: "Professor de Informática Básica", company: "FUNDAT Aracaju", desc: "Aulas de hardware, sistemas operacionais, internet, segurança digital e Pacote Office. Planejamento das aulas e acompanhamento do aprendizado dos alunos." },
+  { period: "Jan 2026 — Jul 2026", role: "Desenvolvedor Full Stack", company: "Climbe Investimentos — Residência de Software III", desc: "Arquitetura e desenvolvimento full stack de um sistema interno para analistas de investimentos: modelagem de dados, APIs REST, regras de negócio e interface do front-end." },
+  { period: "Ago 2025 — Fev 2026", role: "Estagiário de TI — Backend", company: "Ricardo Dinucci", desc: "APIs RESTful com Python e FastAPI, modelagem e consultas SQL em PostgreSQL, Redis para performance, autenticação JWT e 2FA, integração com React e documentação das APIs." },
+  { period: "Fev 2025 — Ago 2025", role: "Estagiário de TI — Suporte", company: "Polícia Militar do Estado de Sergipe", desc: "Suporte técnico aos usuários, manutenção de computadores, instalação de softwares, apoio em redes e sistemas e organização de chamados." },
+  { period: "Jan 2025 — Jul 2025", role: "Desenvolvedor Backend", company: "LACEN / FSPH — Residência de Software II", desc: "API REST para o Laboratório Central de Saúde Pública: gestão de amostras biológicas, geração de laudos, autenticação JWT e documentação Swagger (OpenAPI)." },
+  { period: "Jun 2024 — Dez 2024", role: "Front-end e UI", company: "BAASIC — Residência de Software I", desc: "Design responsivo com Material UI, do Figma à implementação, com foco em acessibilidade e mobile. Docker para simplificar deploy e integração contínua." },
+  { period: "Mai 2023 — Jan 2024", role: "Jovem Aprendiz", company: "Eletrocel", desc: "Organização do sistema de informática da loja, cadastro de clientes e estoque, planilhas no Excel e suporte de vendas." },
+];
+
+const certifications = [
+  { name: "Google Cloud Computing Foundations", org: "Google", year: "2025" },
+  { name: "Empreendedorismo — Programa Supernova", org: "Sebrae · 80h", year: "2026" },
+  { name: "Programação Web — Front-End", org: "UNIT · 80h", year: "2024" },
+  { name: "Python Completo", org: "Danki Code · 30h", year: "2024" },
+  { name: "Criando minha API em Java com Spring Boot", org: "UNIT · 6h", year: "2025" },
+  { name: "Introdução à Ciência de Dados com Python e Kaggle", org: "UNIT · 6h", year: "2025" },
 ];
 
 const AboutSection = () => {
@@ -53,11 +65,9 @@ const AboutSection = () => {
             <span className="text-mono text-primary text-sm">&#125;</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
-            <div className="md:col-span-6">
-              <div className="overflow-hidden mb-8">
+          <div className="overflow-hidden mb-8 md:mb-12">
                 <motion.h2
-                  className="text-display text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-[-0.03em] text-foreground leading-[0.9]"
+                  className="text-display text-[clamp(1.25rem,6.6vw,6rem)] font-extrabold tracking-[-0.03em] text-foreground leading-[0.9]"
                   initial={{ y: 80 }}
                   animate={inView ? { y: 0 } : {}}
                   transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -66,10 +76,13 @@ const AboutSection = () => {
                   <br />
                   <span className="text-gradient-cyber">FUTURO</span>
                 </motion.h2>
-              </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
+            <div className="md:col-span-6">
 
               <motion.div
-                className="relative w-48 h-48 md:w-56 md:h-56 overflow-hidden border border-border/50"
+                className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 overflow-hidden border border-border/50"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -78,7 +91,7 @@ const AboutSection = () => {
                 <img
                   src={profilePhoto}
                   alt="Raul Rodrigues"
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  className="w-full h-full object-cover object-[40%_30%] grayscale hover:grayscale-0 transition-all duration-700"
                 />
                 <div className="absolute inset-0 bg-primary/10 mix-blend-overlay" />
                 <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-primary" />
@@ -93,13 +106,15 @@ const AboutSection = () => {
               style={{ y: textY }}
             >
               <p className="text-body text-muted-foreground text-sm md:text-base leading-relaxed mb-6">
-                Sou Raul Rodrigues, desenvolvedor Full Stack Junior com 3 anos de experiência
-                e 10 projetos profissionais. Cursando Ciência da Computação em Aracaju, Sergipe.
-                Apaixonado por criar soluções que fazem a diferença.
+                Sou Raul Rodrigues, desenvolvedor full stack em formação, cursando Ciência da Computação
+                na Universidade Tiradentes (UNIT), em Aracaju. No back-end, construo APIs REST com Python,
+                FastAPI e Java/Spring Boot, com PostgreSQL, Redis, JWT/2FA e Docker. No front-end, crio
+                interfaces responsivas com React e Material UI, do Figma à implementação.
               </p>
               <p className="text-body text-muted-foreground/60 text-sm leading-relaxed">
-                De estágios em instituições públicas a desenvolvimento de APIs para o estado de Sergipe,
-                minha trajetória é marcada pela busca constante de aprendizado e entrega de valor real.
+                Passei por estágios e residências de software em instituições públicas e empresas privadas,
+                além de suporte técnico, docência e inovação. Busco estágio, trainee ou vaga júnior em
+                desenvolvimento — remoto ou em Aracaju.
               </p>
             </motion.div>
           </div>
@@ -113,10 +128,10 @@ const AboutSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           {[
-            { value: "3+", label: "Anos de XP" },
-            { value: "10+", label: "Projetos" },
-            { value: "99.9%", label: "Uptime" },
-            { value: "∞", label: "Curiosidade" },
+            { value: "8", label: "Experiências" },
+            { value: "3", label: "Residências" },
+            { value: "20+", label: "Certificações" },
+            { value: "5º", label: "Período CC" },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -209,19 +224,19 @@ const AboutSection = () => {
           <div className="border-t border-border">
             {timeline.map((item, i) => (
               <motion.div
-                key={item.year}
-                className="grid grid-cols-12 gap-4 py-8 border-b border-border group hover:bg-card/50 transition-colors duration-500 px-4"
+                key={item.period}
+                className="grid grid-cols-12 gap-x-4 gap-y-1 py-6 md:py-8 border-b border-border group hover:bg-card/50 transition-colors duration-500 px-4"
                 initial={{ opacity: 0, x: -20 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.8 + i * 0.15 }}
                 whileHover={{ x: 4 }}
               >
-                <div className="col-span-2 md:col-span-1">
-                  <span className="text-mono text-[10px] tracking-widest text-primary">
-                    {item.year}
+                <div className="col-span-12 md:col-span-2">
+                  <span className="text-mono text-[10px] tracking-widest uppercase text-primary">
+                    {item.period}
                   </span>
                 </div>
-                <div className="col-span-10 md:col-span-4">
+                <div className="col-span-12 md:col-span-4">
                   <h4 className="text-display text-lg font-bold text-foreground">
                     {item.role}
                   </h4>
@@ -229,7 +244,7 @@ const AboutSection = () => {
                     {item.company}
                   </span>
                 </div>
-                <div className="col-span-12 md:col-span-5 md:col-start-7 mt-2 md:mt-0">
+                <div className="col-span-12 md:col-span-6 mt-2 md:mt-0">
                   <p className="text-body text-sm text-muted-foreground leading-relaxed">
                     {item.desc}
                   </p>
@@ -261,17 +276,49 @@ const AboutSection = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <h4 className="text-display text-lg font-bold text-foreground">
-                  Ciência da Computação
+                  Bacharelado em Ciência da Computação
                 </h4>
                 <span className="text-mono text-[10px] tracking-widest uppercase text-muted-foreground">
-                  Bacharelado — Em andamento
+                  Universidade Tiradentes (UNIT) — 5º período, em curso
                 </span>
               </div>
               <span className="text-mono text-[10px] tracking-widest text-primary">
                 ARACAJU, SE
               </span>
             </div>
+            <div className="mt-6 pt-6 border-t border-border flex flex-wrap gap-x-8 gap-y-2">
+              <span className="text-mono text-[10px] tracking-widest uppercase text-muted-foreground">
+                Português — <span className="text-foreground">nativo</span>
+              </span>
+              <span className="text-mono text-[10px] tracking-widest uppercase text-muted-foreground">
+                Inglês — <span className="text-foreground">intermediário</span>
+              </span>
+            </div>
           </motion.div>
+
+          <motion.div
+            className="flex items-center gap-3 mt-16 mb-10"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ delay: 1.1 }}
+          >
+            <span className="text-mono text-[10px] tracking-[0.4em] uppercase text-primary">
+              // certificações
+            </span>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
+            {certifications.map((cert) => (
+              <div key={cert.name} className="bg-background p-5 md:p-6 hover:bg-card transition-colors duration-500">
+                <h4 className="text-body text-sm font-medium text-foreground leading-snug mb-2">
+                  {cert.name}
+                </h4>
+                <span className="text-mono text-[10px] tracking-widest uppercase text-muted-foreground">
+                  {cert.org} · <span className="text-primary">{cert.year}</span>
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

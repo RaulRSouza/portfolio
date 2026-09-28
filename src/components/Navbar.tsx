@@ -1,14 +1,22 @@
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { Menu, X } from "lucide-react";
+
+const navItems = [
+  { label: "Projetos", href: "#works" },
+  { label: "Sobre", href: "#about" },
+  { label: "Contato", href: "#contact" },
+];
 
 const Navbar = () => {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
-    setHidden(latest > previous && latest > 150);
+    setHidden(!menuOpen && latest > previous && latest > 150);
     setScrolled(latest > 50);
   });
 
@@ -20,7 +28,7 @@ const Navbar = () => {
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       <div className={`px-6 md:px-12 lg:px-16 py-4 flex justify-between items-center transition-all duration-500 ${
-        scrolled ? 'bg-background/80 backdrop-blur-xl border-b border-border/50' : ''
+        scrolled || menuOpen ? 'bg-background/80 backdrop-blur-xl border-b border-border/50' : ''
       }`}>
         {/* Logo */}
         <motion.a
@@ -40,11 +48,7 @@ const Navbar = () => {
 
         {/* Nav links */}
         <div className="hidden md:flex items-center gap-1">
-          {[
-            { label: "Projetos", href: "#works" },
-            { label: "Sobre", href: "#about" },
-            { label: "Contato", href: "#contact" },
-          ].map((item, i) => (
+          {navItems.map((item, i) => (
             <motion.a
               key={item.label}
               href={item.href}
@@ -80,8 +84,41 @@ const Navbar = () => {
           <span className="text-mono text-[10px] tracking-widest uppercase text-muted-foreground hidden sm:block">
             Disponível
           </span>
+          <button
+            type="button"
+            className="md:hidden ml-3 p-2 -mr-2 text-foreground hover:text-primary transition-colors"
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </motion.div>
       </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border/50 px-6 pb-6"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className="block py-4 border-b border-border/50 text-mono text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors"
+              >
+                {item.label}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };

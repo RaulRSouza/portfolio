@@ -49,7 +49,7 @@ const ContactSection = () => {
 
           <div className="overflow-hidden">
             <motion.h2
-              className="text-display text-5xl md:text-7xl lg:text-[8rem] font-extrabold tracking-[-0.04em] text-foreground leading-[0.85]"
+              className="text-display text-[clamp(1.5rem,8.2vw,6rem)] font-extrabold tracking-[-0.04em] text-foreground leading-[0.85]"
               initial={{ y: 120 }}
               animate={inView ? { y: 0 } : {}}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -59,7 +59,7 @@ const ContactSection = () => {
           </div>
           <div className="overflow-hidden">
             <motion.h2
-              className="text-display text-5xl md:text-7xl lg:text-[8rem] font-extrabold tracking-[-0.04em] leading-[0.85]"
+              className="text-display text-[clamp(1.5rem,8.2vw,6rem)] font-extrabold tracking-[-0.04em] leading-[0.85]"
               initial={{ y: 120 }}
               animate={inView ? { y: 0 } : {}}
               transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
@@ -79,19 +79,19 @@ const ContactSection = () => {
           {/* Left - description + CTA */}
           <div>
             <p className="text-body text-muted-foreground text-sm md:text-base leading-relaxed mb-8 max-w-md">
-              Disponível para projetos desafiadores, posições full-time e 
-              colaborações que empurram os limites do que é possível na web.
+              Em busca de estágio, trainee ou vaga júnior em desenvolvimento de software —
+              remoto ou presencial/híbrido em Aracaju. Também aberto a projetos e colaborações.
             </p>
 
             <motion.a
-              href="https://wa.me/5575999880288?text=Ol%C3%A1%2C%20Raul.%20Vi%20seu%20portf%C3%B3lio%20e%20quero%20falar%20sobre%20um%20projeto."
+              href="https://wa.me/5575999880288?text=Ol%C3%A1%2C%20Raul.%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar."
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 text-mono text-sm tracking-[0.2em] uppercase text-primary-foreground bg-primary px-8 py-4 hover:glow-sm transition-all duration-500"
+              className="group inline-flex items-center gap-3 text-mono text-sm tracking-[0.2em] uppercase text-primary-foreground bg-primary px-6 sm:px-8 py-4 hover:glow-sm transition-all duration-500"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
-              <span>Iniciar projeto</span>
+              <span>Vamos conversar</span>
               <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition-transform duration-300" />
             </motion.a>
 
@@ -108,7 +108,7 @@ const ContactSection = () => {
                 className="text-mono text-xs text-muted-foreground hover:text-primary transition-colors duration-300 tracking-widest block"
                 whileHover={{ x: 4 }}
               >
-                (075) 99988-0288
+                (75) 9 9988-0288
               </motion.a>
               <motion.span
                 className="text-mono text-xs text-muted-foreground/60 tracking-widest block"
@@ -149,7 +149,7 @@ const ContactSection = () => {
 
       {/* Footer */}
       <motion.div
-        className="relative z-10 mt-32 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4"
+        className="relative z-10 mt-20 md:mt-32 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4"
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.6, delay: 1 }}

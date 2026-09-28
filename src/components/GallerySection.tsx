@@ -1,14 +1,49 @@
 import { motion, useInView, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { ArrowUpRight, Terminal } from "lucide-react";
+import { ArrowUpRight, Github, Terminal } from "lucide-react";
 import projectHpm from "@/assets/project-hpm.jpg";
 import projectCrypto from "@/assets/project-crypto.jpg";
 import projectLacen from "@/assets/project-lacen.jpg";
 import projectEletrocel from "@/assets/project-eletrocel.png";
 
-const projects = [
+type Project = {
+  id: string;
+  title: string;
+  subtitle: string;
+  category: string;
+  year: string;
+  description: string;
+  tech: string[];
+  metrics: Record<string, string>;
+  image?: string;
+  repo?: string;
+};
+
+const projects: Project[] = [
   {
     id: "01",
+    title: "Climbe",
+    subtitle: "Residência de Software III — Climbe Investimentos",
+    category: "FULL STACK",
+    year: "2026",
+    description: "Sistema interno para os analistas de investimentos da empresa: arquitetura, modelagem de dados, APIs REST com as regras de negócio e interface pensada para o dia a dia dos analistas.",
+    tech: ["React", "TypeScript", "APIs REST", "SQL"],
+    metrics: {},
+    repo: "https://github.com/RaulRSouza/climb-insight-hub",
+  },
+  {
+    id: "02",
+    title: "To-Do Full Stack",
+    subtitle: "Teste técnico — Advice Health",
+    category: "FULL STACK",
+    year: "2025",
+    description: "Aplicação de tarefas com Django REST Framework e React + TypeScript: autenticação JWT, CRUD, filtros, categorias, compartilhamento, Docker, PostgreSQL e testes com pytest. Nota 30/30.",
+    tech: ["Django REST", "React", "TypeScript", "PostgreSQL", "Docker"],
+    metrics: { nota: "30/30", testes: "pytest" },
+    repo: "https://github.com/RaulRSouza/TO-DO",
+  },
+  {
+    id: "03",
     title: "CryptoTrend",
     subtitle: "Plataforma de Trading",
     category: "FULL STACK",
@@ -19,7 +54,7 @@ const projects = [
     image: projectCrypto,
   },
   {
-    id: "02",
+    id: "04",
     title: "HPM-SINC",
     subtitle: "Sistema Hospitalar — PM Sergipe",
     category: "FULL STACK",
@@ -28,20 +63,22 @@ const projects = [
     tech: ["React", "TypeScript", "FastAPI", "PostgreSQL", "Docker"],
     metrics: { laudos: "2.4K+", perf: "98", uptime: "99.9%" },
     image: projectHpm,
+    repo: "https://github.com/RaulRSouza/API-JM",
   },
   {
-    id: "03",
+    id: "05",
     title: "API LACEN",
-    subtitle: "Fundação Parreiras Horta — Vigilância Sanitária SE",
+    subtitle: "Residência de Software II — Fundação Parreiras Horta",
     category: "BACKEND",
-    year: "2024",
-    description: "API RESTful para a vigilância sanitária de Sergipe, com sistema de gerenciamento de amostras biológicas, envio de laudos, autenticação JWT e documentação Swagger.",
-    tech: ["FastAPI", "Swagger", "PostgreSQL", "Docker", "JWT"],
+    year: "2025",
+    description: "API REST para o Laboratório Central de Saúde Pública de Sergipe: gestão de lotes, amostras biológicas e lâminas, geração de laudos, autenticação JWT e documentação Swagger (OpenAPI).",
+    tech: ["Java", "Spring Boot", "Swagger", "PostgreSQL", "JWT"],
     metrics: { endpoints: "35", perf: "91%", models: "16" },
     image: projectLacen,
+    repo: "https://github.com/RaulRSouza/FSPH-API",
   },
   {
-    id: "04",
+    id: "06",
     title: "Eletrocel",
     subtitle: "Loja Virtual",
     category: "FULL STACK",
@@ -53,10 +90,17 @@ const projects = [
   },
 ];
 
-const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: number }) => {
+const metricLabels: Record<string, string> = {
+  perf: "LIGHTHOUSE", sinais: "SINAIS", laudos: "LAUDOS", users: "USUÁRIOS",
+  endpoints: "ENDPOINTS", models: "MODELOS", produtos: "PRODUTOS", nota: "NOTA", testes: "TESTES",
+};
+
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [isHovered, setIsHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const expanded = isHovered || isOpen;
 
   return (
     <motion.div
@@ -67,9 +111,10 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
       transition={{ duration: 0.8, delay: index * 0.15 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={() => setIsOpen((open) => !open)}
     >
       <AnimatePresence>
-        {isHovered && (
+        {expanded && (
           <motion.div
             className="absolute inset-0 bg-primary/[0.03]"
             initial={{ opacity: 0 }}
@@ -100,7 +145,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
               <span className="text-mono text-[9px] tracking-[0.3em] uppercase text-primary block mb-1">
                 {project.category} — {project.year}
               </span>
-              <h3 className="text-display text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-none">
+              <h3 className="text-display text-2xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-foreground leading-none">
                 {project.title}
               </h3>
               <span className="text-body text-xs text-muted-foreground mt-1 block">
@@ -109,10 +154,10 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             </motion.div>
           </div>
 
-          <div className="col-span-12 md:col-span-4 hidden md:block">
+          <div className="col-span-12 md:col-span-4 mt-2 md:mt-0">
             <motion.p
               className="text-body text-xs text-muted-foreground leading-relaxed"
-              animate={{ opacity: isHovered ? 1 : 0.5, x: isHovered ? 4 : 0 }}
+              animate={{ opacity: expanded ? 1 : 0.6, x: isHovered ? 4 : 0 }}
               transition={{ duration: 0.4 }}
             >
               {project.description}
@@ -130,8 +175,8 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             <motion.div
               className="ml-4 flex-shrink-0"
               animate={{
-                rotate: isHovered ? 0 : -45,
-                scale: isHovered ? 1.2 : 1,
+                rotate: expanded ? 0 : -45,
+                scale: expanded ? 1.2 : 1,
               }}
               transition={{ duration: 0.3 }}
             >
@@ -141,38 +186,52 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
         </div>
 
         <AnimatePresence>
-          {isHovered && (
+          {expanded && (
             <motion.div
-              className="hidden md:grid grid-cols-12 gap-4 mt-6"
+              className="grid grid-cols-12 gap-4 mt-6 overflow-hidden"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="col-span-6 col-start-2">
-                <div className="relative overflow-hidden border border-border/50 rounded-sm">
-                  <motion.img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover object-top"
-                    initial={{ scale: 1.1 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+              {project.image && (
+                <div className="col-span-12 md:col-span-6 md:col-start-2">
+                  <div className="relative overflow-hidden border border-border/50 rounded-sm">
+                    <motion.img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-40 sm:h-48 object-cover object-top"
+                      initial={{ scale: 1.1 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+                  </div>
                 </div>
-              </div>
-              <div className="col-span-4 flex flex-col justify-center gap-4">
+              )}
+              <div className={`col-span-12 ${project.image ? "md:col-span-4" : "md:col-span-10 md:col-start-2"} flex flex-row flex-wrap md:flex-col justify-start md:justify-center gap-x-8 gap-y-4`}>
                 {Object.entries(project.metrics).map(([key, val]) => (
                   <div key={key}>
                     <span className="text-mono text-[9px] tracking-widest uppercase text-muted-foreground block">
-                      {key === "perf" ? "LIGHTHOUSE" : key === "sinais" ? "SINAIS" : key === "laudos" ? "LAUDOS" : key === "users" ? "USUÁRIOS" : key === "endpoints" ? "ENDPOINTS" : key === "models" ? "MODELOS" : key === "produtos" ? "PRODUTOS" : key.toUpperCase()}
+                      {metricLabels[key] ?? key.toUpperCase()}
                     </span>
                     <span className="text-display text-lg font-bold text-primary">
                       {val}
                     </span>
                   </div>
                 ))}
+                {project.repo && (
+                  <a
+                    href={project.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center gap-2 self-start text-mono text-[10px] tracking-[0.2em] uppercase border border-border px-4 py-2 text-muted-foreground hover:border-primary hover:text-primary transition-colors duration-300"
+                  >
+                    <Github className="w-3.5 h-3.5" />
+                    Ver código
+                  </a>
+                )}
               </div>
             </motion.div>
           )}
@@ -182,7 +241,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
       <motion.div
         className="absolute bottom-0 left-0 h-px bg-primary"
         initial={{ width: "0%" }}
-        animate={{ width: isHovered ? "100%" : "0%" }}
+        animate={{ width: expanded ? "100%" : "0%" }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       />
     </motion.div>
@@ -224,7 +283,7 @@ const GallerySection = () => {
 
         <div className="overflow-hidden">
           <motion.h2
-            className="text-display text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-[-0.03em] text-foreground"
+            className="text-display text-[clamp(1.75rem,8.5vw,6rem)] font-extrabold tracking-[-0.03em] text-foreground"
             initial={{ y: 80 }}
             animate={headerInView ? { y: 0 } : {}}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -234,8 +293,8 @@ const GallerySection = () => {
         </div>
 
         <motion.div className="mt-4 overflow-hidden" style={{ x: counterX }}>
-          <span className="text-display text-[8rem] md:text-[12rem] font-extrabold text-foreground/[0.02] leading-none whitespace-nowrap select-none">
-            004 PROJETOS
+          <span className="text-display text-[5rem] sm:text-[8rem] md:text-[12rem] font-extrabold text-foreground/[0.02] leading-none whitespace-nowrap select-none">
+            006 PROJETOS
           </span>
         </motion.div>
       </motion.div>
