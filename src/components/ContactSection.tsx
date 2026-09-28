@@ -95,17 +95,17 @@ const ContactSection = () => {
               <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition-transform duration-300" />
             </motion.a>
 
-            <div className="mt-6 space-y-2">
+            <div className="mt-4">
               <motion.a
                 href="mailto:raul.rodrigues@souunit.com.br"
-                className="text-mono text-xs text-muted-foreground hover:text-primary transition-colors duration-300 tracking-widest block"
+                className="text-mono text-xs text-muted-foreground hover:text-primary transition-colors duration-300 tracking-widest block py-2"
                 whileHover={{ x: 4 }}
               >
                 raul.rodrigues@souunit.com.br
               </motion.a>
               <motion.a
                 href="tel:+5575999880288"
-                className="text-mono text-xs text-muted-foreground hover:text-primary transition-colors duration-300 tracking-widest block"
+                className="text-mono text-xs text-muted-foreground hover:text-primary transition-colors duration-300 tracking-widest block py-2"
                 whileHover={{ x: 4 }}
               >
                 (75) 9 9988-0288

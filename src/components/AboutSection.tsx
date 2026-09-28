@@ -124,11 +124,11 @@ const AboutSection = () => {
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
-              className="bg-background p-6 md:p-8 text-center group hover:bg-card transition-colors duration-500"
+              className="bg-background px-3 py-6 md:p-6 lg:p-8 text-center group hover:bg-card transition-colors duration-500"
               whileHover={{ y: -2 }}
             >
               <motion.span
-                className="text-display text-3xl md:text-5xl font-extrabold text-primary block mb-2 glow-text"
+                className="text-display text-3xl md:text-4xl lg:text-5xl font-extrabold text-primary block mb-2 glow-text"
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.6, delay: 0.6 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
